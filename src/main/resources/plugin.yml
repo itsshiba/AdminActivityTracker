@@ -1,0 +1,6 @@
+name: ExamplePlugin
+version: '${version}'
+main: pl.flezy.example.Example
+api-version: '1.21'
+authors: [ Flezy ]
+website: flezy.pl
