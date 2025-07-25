@@ -1,28 +1,27 @@
-package pl.flezy.example;
+package dev.pvpshiba.adminActivityTracker;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.PaperCommandManager;
+import dev.pvpshiba.adminActivityTracker.listeners.CommandListener;
+import dev.pvpshiba.adminActivityTracker.listeners.InventoryListener;
 import eu.okaeri.configs.ConfigManager;
 import eu.okaeri.configs.serdes.commons.SerdesCommons;
 import eu.okaeri.configs.validator.okaeri.OkaeriValidator;
 import eu.okaeri.configs.yaml.bukkit.YamlBukkitConfigurer;
 import eu.okaeri.configs.yaml.bukkit.serdes.SerdesBukkit;
+import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
-import pl.flezy.example.commands.ExampleCommand;
-import pl.flezy.example.config.Config;
-import pl.flezy.example.config.Data;
-import pl.flezy.example.customitems.ExampleCustomItem;
-import pl.flezy.example.manager.CustomItemManager;
+import dev.pvpshiba.adminActivityTracker.config.Config;
 import pl.flezy.flezylib.FlezyLib;
 
 import java.io.File;
+import java.util.logging.Level;
 
-public final class Example extends JavaPlugin {
+public final class Main extends JavaPlugin {
 
-    private static Example instance;
+    private static Main instance;
     private Config config;
-    private Data data;
 
     @Override
     public void onEnable() {
@@ -31,12 +30,18 @@ public final class Example extends JavaPlugin {
         loadConfigs();
 
         registerListeners(
-            new ExampleCustomItem()
+            new CommandListener(),
+            new InventoryListener()
         );
+        Bukkit.getLogger().log(Level.INFO, "☀ Successfully registered all listeners.");
+        Bukkit.getLogger().log(Level.INFO, "☀ Plugin AdminActivityTracker has been successfully enabled!");
+        Bukkit.getLogger().log(Level.INFO, "☀ Created by pvpshiba ");
 
-        registerCommands(
-            new ExampleCommand()
-        );
+        File adminFolder = new File(getDataFolder(), "admin");
+        if (!adminFolder.exists()) {
+            Bukkit.getLogger().log(Level.INFO, "☀ Admin folder not found, creating it now...");
+            adminFolder.mkdirs();
+        }
 
     }
 
@@ -50,25 +55,12 @@ public final class Example extends JavaPlugin {
                 .withBindFile(new File(this.getDataFolder(), "config.yml"))
                 .saveDefaults()
                 .load(true);
-
-        data = (Data) ConfigManager.create(Data.class)
-                .withConfigurer(new OkaeriValidator(new YamlBukkitConfigurer()))
-                .withSerdesPack(registry -> {
-                    registry.register(new SerdesCommons());
-                    registry.register(new SerdesBukkit());
-                })
-                .withBindFile(new File(this.getDataFolder(), "data.yml"))
-                .saveDefaults()
-                .load(true);
     }
 
     private void registerCommands(BaseCommand... commandList) {
         PaperCommandManager manager = new PaperCommandManager(this);
 
         manager.enableUnstableAPI("help");
-
-        manager.getCommandCompletions().registerCompletion("customitems", c ->
-                CustomItemManager.customItems.stream().toList());
 
         for (BaseCommand command : commandList) {
             manager.registerCommand(command);
@@ -81,7 +73,7 @@ public final class Example extends JavaPlugin {
         }
     }
 
-    public static Example instance() {
+    public static Main instance() {
         return instance;
     }
 
@@ -89,7 +81,4 @@ public final class Example extends JavaPlugin {
         return config;
     }
 
-    public Data data(){
-        return data;
-    }
 }

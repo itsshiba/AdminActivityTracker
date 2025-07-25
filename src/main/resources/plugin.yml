@@ -1,6 +1,10 @@
-name: ExamplePlugin
+name: AdminActivityTracker
 version: '${version}'
-main: pl.flezy.example.Example
+main: dev.pvpshiba.adminActivityTracker.Main
 api-version: '1.21'
-authors: [ Flezy ]
-website: flezy.pl
+authors: [ 303pvpshiba ]
+
+permissions:
+  aat.admin:
+    description: A player who has this permission is tracked by the plugin.
+    default: op
