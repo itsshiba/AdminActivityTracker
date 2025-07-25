@@ -14,11 +14,11 @@ public class CommandListener implements Listener {
     @EventHandler
     public void onPlayerCommand(PlayerCommandPreprocessEvent event) {
 
-        if (!event.getPlayer().hasPermission("aat.admin")) {
+        Player player = event.getPlayer();
+        if (!player.hasPermission("aat.admin")) {
             return;
         }
 
-        Player player = event.getPlayer();
         File file = new File("plugins/AdminActivityTracker/admin/" + player.getName() + ".txt");
 
         if (!file.exists()) {

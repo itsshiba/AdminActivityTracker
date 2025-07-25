@@ -22,6 +22,10 @@ public class InventoryListener implements Listener {
             return;
         }
 
+        if (event.getCursor().getType() == Material.AIR) {
+            return;
+        }
+
         File file = new File("plugins/AdminActivityTracker/admin/" + player.getName() + ".txt");
 
         if (!file.exists()) {
