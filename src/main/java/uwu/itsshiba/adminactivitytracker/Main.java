@@ -1,9 +1,9 @@
-package dev.pvpshiba.adminActivityTracker;
+package uwu.itsshiba.adminactivitytracker;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.PaperCommandManager;
-import dev.pvpshiba.adminActivityTracker.listeners.CommandListener;
-import dev.pvpshiba.adminActivityTracker.listeners.InventoryListener;
+import uwu.itsshiba.adminactivitytracker.listeners.CommandListener;
+import uwu.itsshiba.adminactivitytracker.listeners.InventoryListener;
 import eu.okaeri.configs.ConfigManager;
 import eu.okaeri.configs.serdes.commons.SerdesCommons;
 import eu.okaeri.configs.validator.okaeri.OkaeriValidator;
@@ -12,8 +12,7 @@ import eu.okaeri.configs.yaml.bukkit.serdes.SerdesBukkit;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
-import dev.pvpshiba.adminActivityTracker.config.Config;
-import pl.flezy.flezylib.FlezyLib;
+import uwu.itsshiba.adminactivitytracker.config.Config;
 
 import java.io.File;
 import java.util.logging.Level;
@@ -26,16 +25,14 @@ public final class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
-        FlezyLib.init(this);
         loadConfigs();
 
         registerListeners(
             new CommandListener(),
             new InventoryListener()
         );
-        Bukkit.getLogger().log(Level.INFO, "☀ Successfully registered all listeners.");
         Bukkit.getLogger().log(Level.INFO, "☀ Plugin AdminActivityTracker has been successfully enabled!");
-        Bukkit.getLogger().log(Level.INFO, "☀ Created by pvpshiba ");
+        Bukkit.getLogger().log(Level.INFO, "☀ Created by ItsShiba ");
 
         File adminFolder = new File(getDataFolder(), "admin");
         if (!adminFolder.exists()) {

@@ -1,5 +1,7 @@
-package dev.pvpshiba.adminActivityTracker.listeners;
+package uwu.itsshiba.adminactivitytracker.listeners;
 
+import uwu.itsshiba.adminactivitytracker.Main;
+import uwu.itsshiba.adminactivitytracker.config.Config;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,9 +18,10 @@ public class InventoryListener implements Listener {
     @EventHandler
     public void onInventoryCreative(InventoryCreativeEvent event) {
 
+        Config config = Main.instance().config();
         Player player = (Player) event.getWhoClicked();
 
-        if (!player.hasPermission("aat.admin")) {
+        if (!config.isLogCreativeItems() || !player.hasPermission("aat.admin")) {
             return;
         }
 
@@ -36,7 +39,7 @@ public class InventoryListener implements Listener {
             }
         }
 
-        try (FileWriter fileWriter = new FileWriter(file, true);) {
+        try (FileWriter fileWriter = new FileWriter(file, true)) {
             LocalDateTime currentDate = LocalDateTime.now();
             DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
             String formattedDate = currentDate.format(myFormatObj);
@@ -48,9 +51,10 @@ public class InventoryListener implements Listener {
 
     @EventHandler
     public void onPlayerDropItem(PlayerDropItemEvent event) {
-        Player player = (Player) event.getPlayer();
+        Player player = event.getPlayer();
+        Config config = Main.instance().config();
 
-        if (!player.hasPermission("aat.admin")) {
+        if (!config.isLogDroppedItems() || !player.hasPermission("aat.admin")) {
             return;
         }
 
@@ -64,7 +68,7 @@ public class InventoryListener implements Listener {
             }
         }
 
-        try (FileWriter fileWriter = new FileWriter(file, true);) {
+        try (FileWriter fileWriter = new FileWriter(file, true)) {
             LocalDateTime currentDate = LocalDateTime.now();
             DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
             String formattedDate = currentDate.format(myFormatObj);
@@ -76,11 +80,14 @@ public class InventoryListener implements Listener {
 
     @EventHandler
     public void onInventoryDrag(InventoryClickEvent event) {
+
+        Config config = Main.instance().config();
         Player player = (Player) event.getWhoClicked();
 
-        if (!player.hasPermission("aat.admin")) {
+        if (!config.isLogMovedItems() || !player.hasPermission("aat.admin")) {
             return;
         }
+
 
         if (event.getCursor().getType() == Material.AIR) {
             return;
@@ -96,7 +103,7 @@ public class InventoryListener implements Listener {
             }
         }
 
-        try (FileWriter fileWriter = new FileWriter(file, true);) {
+        try (FileWriter fileWriter = new FileWriter(file, true)) {
             LocalDateTime currentDate = LocalDateTime.now();
             DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
             String formattedDate = currentDate.format(myFormatObj);

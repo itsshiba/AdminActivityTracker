@@ -3,7 +3,7 @@ plugins {
     id "com.gradleup.shadow" version "9.0.0-beta17"
 }
 
-group = 'pl.flezy'
+group = 'uwu.itsshiba'
 version = '1.0'
 
 repositories {
@@ -25,10 +25,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT")
-
-    implementation 'com.github.flezeusz:FlezyLib:1.0.2'
-
+    compileOnly("io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT")
     implementation 'eu.okaeri:okaeri-configs-yaml-bukkit:5.0.9'
     implementation 'eu.okaeri:okaeri-configs-serdes-bukkit:5.0.9'
     implementation 'eu.okaeri:okaeri-configs-serdes-commons:5.0.9'
@@ -39,10 +36,9 @@ dependencies {
 }
 
 shadowJar {
-    relocate("pl.flezy.flezylib", "pl.flezy.example.libs.flezylib")
-    relocate("eu.okaeri", "pl.flezy.example.libs.eu.okaeri")
-    relocate("co.aikar.commands", "pl.flezy.example.libs.acf")
-    relocate("co.aikar.locales", "pl.flezy.example.libs.locales")
+    relocate("eu.okaeri", "uwu.itsshiba.adminactivitytracker.libs.eu.okaeri")
+    relocate("co.aikar.commands", "uwu.itsshiba.adminactivitytracker.libs.acf")
+    relocate("co.aikar.locales", "uwu.itsshiba.adminactivitytracker.libs.locales")
 }
 
 assemble.dependsOn(shadowJar)

@@ -1,5 +1,7 @@
-package dev.pvpshiba.adminActivityTracker.listeners;
+package uwu.itsshiba.adminactivitytracker.listeners;
 
+import uwu.itsshiba.adminactivitytracker.Main;
+import uwu.itsshiba.adminactivitytracker.config.Config;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,13 +16,14 @@ public class CommandListener implements Listener {
     @EventHandler
     public void onPlayerCommand(PlayerCommandPreprocessEvent event) {
 
+        Config config = Main.instance().config();
         Player player = event.getPlayer();
-        if (!player.hasPermission("aat.admin")) {
+
+        if (!config.isLogAdminCommands() || !player.hasPermission("aat.admin")) {
             return;
         }
 
         File file = new File("plugins/AdminActivityTracker/admin/" + player.getName() + ".txt");
-
         if (!file.exists()) {
             try {
                 file.createNewFile();
@@ -29,7 +32,7 @@ public class CommandListener implements Listener {
             }
         }
 
-        try (FileWriter fileWriter = new FileWriter(file, true);) {
+        try (FileWriter fileWriter = new FileWriter(file, true)) {
             LocalDateTime currentDate = LocalDateTime.now();
             DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
             String formattedDate = currentDate.format(myFormatObj);

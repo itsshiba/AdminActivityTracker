@@ -1,8 +1,9 @@
 name: AdminActivityTracker
 version: '${version}'
-main: dev.pvpshiba.adminActivityTracker.Main
-api-version: '1.21'
-authors: [ 303pvpshiba ]
+main: uwu.itsshiba.adminactivitytracker.Main
+api-version: '1.20'
+authors: [ ItsShiba ]
+website: riftmc.eu
 
 permissions:
   aat.admin:
